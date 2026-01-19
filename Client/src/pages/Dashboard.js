@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import AddFileModal from "../components/AddFileModal";
+import Loader from "../components/Loader";
 
 export default function Dashboard() {
   const [user, setUser] = useState(null);
@@ -96,12 +97,13 @@ export default function Dashboard() {
     }
   };
 
-  if (!user) return <p className="p-10">Loading...</p>;
+  // if (!user) return <p className="p-10">Loading...</p>;
+  if (!user) return <Loader />;
 
   return (
     <div className="flex min-h-screen bg-gray-100">
       {/* SIDEBAR */}
-      <div className="w-72 bg-white shadow-lg flex flex-col justify-between">
+      <div className="w-72 shadow-lg flex flex-col justify-between bg-white">
         <div className="p-6">
           <h2 className="text-xl font-bold">{user.name}</h2>
           <hr className="my-4" />
@@ -149,16 +151,14 @@ export default function Dashboard() {
               {files.map((file, index) => (
                 <tr
                   key={file._id}
-                  className={`border-t ${
-                    index % 2 === 0 ? "bg-white" : "bg-gray-200"
-                  }`}
+                  className={`border-t ${index % 2 === 0 ? "bg-white" : "bg-gray-200"
+                    }`}
                 >
                   <td
-                    className={`p-3 truncate font-bold italic cursor-pointer ${
-                      file?.qbo?.isConnected
-                        ? "text-blue-600 hover:underline"
-                        : "text-gray-400 cursor-not-allowed"
-                    }`}
+                    className={`p-3 truncate font-bold italic cursor-pointer ${file?.qbo?.isConnected
+                      ? "text-blue-600 hover:underline"
+                      : "text-gray-400 cursor-not-allowed"
+                      }`}
                     onClick={() =>
                       file?.qbo?.isConnected &&
                       navigate(`/file/${file._id}`)

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
+import Loader from "../components/Loader";
 
 export default function FileDashboard() {
   const { fileId } = useParams();
@@ -109,7 +110,8 @@ export default function FileDashboard() {
   const [moduleDates, setModuleDates] = useState({});
 
 
-  if (!file || !user) return <p className="p-10">Loading...</p>;
+  // if (!file || !user) return <p className="p-10">Loading...</p>;
+  if (!file || !user) return <Loader />;
 
   const updateStatus = (module, status) => {
     setModuleStatus((prev) => {
@@ -184,7 +186,7 @@ export default function FileDashboard() {
   return (
     <div className="flex min-h-screen bg-gray-100">
       {/* SIDEBAR */}
-      <div className="w-72 bg-white shadow-lg p-6 flex flex-col justify-between">
+      <div className="w-72 shadow-lg p-6 flex flex-col justify-between bg-white">
         <div>
 
           <h2 className="text-xl font-bold">{user.name}</h2>

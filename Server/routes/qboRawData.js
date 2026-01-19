@@ -100,6 +100,8 @@ router.get("/summary/:realmId", authMiddleware, async (req, res) => {
   }
 });
 
+
+//Excel export route
 router.get("/export-excel/:fileId/:region/:moduleKey", authMiddleware, async (req, res) => {
   const { fileId, region, moduleKey } = req.params;
   try {
@@ -111,6 +113,8 @@ router.get("/export-excel/:fileId/:region/:moduleKey", authMiddleware, async (re
 }
 );
 
+
+//CSV export route
 router.get("/export-csv/:fileId/:region/:moduleKey", authMiddleware, async (req, res) => {
   const { fileId, region, moduleKey } = req.params;
   try {
