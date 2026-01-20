@@ -1,12 +1,26 @@
 const ExcelJS = require("exceljs");
 const QboRawData = require("../../../models/QboRawData");
 
-module.exports = async function usPaymentsExcel(fileId, res) {
+module.exports = async function usPaymentsExcel({
+  fileId,
+  fromDate,
+  toDate,
+  res,
+}) {
   try {
-    const records = await QboRawData.find({
+    const filter = {
       fileId,
       module: "payment",
-    }).lean();
+    };
+
+    if (fromDate && toDate) {
+      filter["raw.TxnDate"] = {
+        $gte: fromDate,
+        $lte: toDate,
+      };
+    }
+
+    const records = await QboRawData.find(filter).lean();
 
     if (!records.length) {
       return res.status(404).json({ message: "No Payment data found" });

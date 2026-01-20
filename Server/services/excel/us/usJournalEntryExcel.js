@@ -1,12 +1,27 @@
 const ExcelJS = require("exceljs");
 const QboRawData = require("../../../models/QboRawData");
 
-module.exports = async function usJournalEntryExcel(fileId, res) {
+module.exports = async function usJournalEntryExcel({
+  fileId,
+  fromDate,
+  toDate,
+  res,
+}) {
   try {
-    const records = await QboRawData.find({
+    const filter = {
       fileId,
       module: "journalentry",
-    }).lean();
+    };
+
+    if (fromDate && toDate) {
+      filter["raw.TxnDate"] = {
+        $gte: fromDate,
+        $lte: toDate,
+      };
+    }
+
+    const records = await QboRawData.find(filter).lean();
+
 
     if (!records.length) {
       return res.status(404).json({ message: "No Journal data found" });

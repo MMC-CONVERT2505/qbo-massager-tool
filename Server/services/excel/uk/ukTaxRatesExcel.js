@@ -2,12 +2,18 @@ const ExcelJS = require("exceljs");
 const QboRawData = require("../../../models/QboRawData");
 const flattenObject = require("../../../utils/flattenObject");
 
-module.exports = async function ukTaxRatesExcel(fileId, res) {
+module.exports = async function ukTaxRatesExcel({
+  fileId,
+  res,
+}) {
   try {
-    const records = await QboRawData.find({
+    const filter = {
       fileId,
-      module: 'taxrate',
-    }).lean();
+      module: "taxrate",
+    };
+
+    const records = await QboRawData.find(filter).lean();
+
 
     if (!records.length) {
       return res.status(404).json({ message: "No UK tax rate data found" });

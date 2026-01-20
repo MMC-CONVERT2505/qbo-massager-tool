@@ -26,7 +26,15 @@ const usJournalEntryExcel = require("./us/usJournalEntryExcel");
 const usPaymentsExcel = require("./us/usPaymentsExcel");
 const usBillPaymentsExcel = require("./us/usBillPaymentsExcel");
 
-const excelResolver = async ({ fileId, region, moduleKey, res }) => {
+const excelResolver = async ({
+  fileId,
+  region,
+  moduleKey,
+  fromDate,
+  toDate,
+  userId,
+  res,
+}) => {
   const REGION = region.toUpperCase();
   const MODULE = moduleKey.toLowerCase();
 
@@ -77,7 +85,8 @@ const excelResolver = async ({ fileId, region, moduleKey, res }) => {
   }
 
   // 🚀 finally call correct function
-  await excelFn(fileId, res);
+  // await excelFn(fileId, res);
+  await excelFn({ fileId, fromDate, toDate, userId, res });
 };
 
 module.exports = excelResolver;

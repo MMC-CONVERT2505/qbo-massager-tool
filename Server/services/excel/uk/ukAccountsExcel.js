@@ -2,12 +2,19 @@ const ExcelJS = require("exceljs");
 const QboRawData = require("../../../models/QboRawData");
 const flattenObject = require("../../../utils/flattenObject");
 
-module.exports = async function ukAccountsExcel(fileId, res) {
+
+module.exports = async function ukAccountsExcel({
+  fileId,
+  res,
+}) {
   try {
-    const records = await QboRawData.find({
+    const filter = {
       fileId,
-      module: 'account',
-    }).lean();
+      module: "account",
+    };
+
+    const records = await QboRawData.find(filter).lean();
+
 
     if (!records.length) {
       return res.status(404).json({ message: "No UK data found" });

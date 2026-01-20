@@ -12,6 +12,9 @@ export default function FileDashboard() {
   const [companyName, setCompanyName] = useState("");
   const [selectedModules, setSelectedModules] = useState([]);
   const [syncLoading, setSyncLoading] = useState(false);
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
+
 
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
   const token = localStorage.getItem("token");
@@ -156,7 +159,9 @@ export default function FileDashboard() {
           `${API_BASE_URL}/api/qbo/sync`,
           {
             fileId,
-            modules: [module], // 👈 single module
+            modules: [module],
+            fromDate,
+            toDate,
           },
           {
             headers: { Authorization: `Bearer ${token}` },
@@ -276,7 +281,22 @@ export default function FileDashboard() {
         {/* CONTENT AREA */}
 
         <div className="bg-white rounded-xl shadow p-6">
-          <h2 className="text-lg text-center font-bold mb-4">QBO Data Sync</h2>
+          <div className="flex gap-4 mb-4">
+            <h2 className="text-xl text-left font-bold flex-1">QBO Data Sync</h2>
+            <input
+              type="date"
+              value={fromDate}
+              onChange={(e) => setFromDate(e.target.value)}
+              className="border p-2 rounded flex-1"
+            />
+            <input
+              type="date"
+              value={toDate}
+              onChange={(e) => setToDate(e.target.value)}
+              className="border p-2 rounded flex-1"
+            />
+          </div>
+
           {!file.qbo?.isConnected ? (
             <p className="text-red-500 italic">
               Please connect QBO to sync data

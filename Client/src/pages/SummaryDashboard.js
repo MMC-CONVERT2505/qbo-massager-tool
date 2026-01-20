@@ -11,6 +11,8 @@ export default function SummaryDashboard() {
     const [user, setUser] = useState(null);
     const [companyName, setCompanyName] = useState("");
     const [moduleSummary, setModuleSummary] = useState({});
+    const [fromDate, setFromDate] = useState("");
+    const [toDate, setToDate] = useState("");
 
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
     const token = localStorage.getItem("token");
@@ -89,14 +91,14 @@ export default function SummaryDashboard() {
         { key: "bill", label: "Bill" },
         { key: "payment", label: "ReceivePayment" },
         { key: "billpayment", label: "BillPayment" },
-        { key: "vendorcredit", label: "VendorCredit" },
-        { key: "creditmemo", label: "CreditMemo" },
-        { key: "journalentry", label: "JournalEntry" },
-        { key: "transfer", label: "Transfer" },
-        { key: "deposit", label: "Deposit" },
-        { key: "estimate", label: "Estimate" },
-        { key: "purchaseorder", label: "PurchaseOrder" },
-        { key: "salesreceipt", label: "SalesReceipt" },
+        // { key: "vendorcredit", label: "VendorCredit" },
+        // { key: "creditmemo", label: "CreditMemo" },
+        // { key: "journalentry", label: "JournalEntry" },
+        // { key: "transfer", label: "Transfer" },
+        // { key: "deposit", label: "Deposit" },
+        // { key: "estimate", label: "Estimate" },
+        // { key: "purchaseorder", label: "PurchaseOrder" },
+        // { key: "salesreceipt", label: "SalesReceipt" },
 
     ];
 
@@ -162,6 +164,7 @@ export default function SummaryDashboard() {
                 `${API_BASE_URL}/api/qborawdata/export-excel/${fileId}/${region}/${moduleKey}`,
                 {
                     headers: { Authorization: `Bearer ${token}` },
+                    params: { fromDate, toDate },
                     responseType: "blob",
                 }
             );
@@ -216,6 +219,7 @@ export default function SummaryDashboard() {
                 `${API_BASE_URL}/api/qborawdata/export-csv/${fileId}/${region}/${moduleKey}`,
                 {
                     headers: { Authorization: `Bearer ${token}` },
+                    params: { fromDate, toDate }, // 👈🔥 DATE PASS
                     responseType: "blob",
                 }
             );
@@ -346,7 +350,22 @@ export default function SummaryDashboard() {
                 {/* CONTENT AREA */}
 
                 <div className="bg-white rounded-xl shadow p-6">
-                    <h2 className="text-lg text-center font-bold mb-4">QBO Data Summary</h2>
+                    <div className="flex gap-4 mb-4">
+                        <h2 className="text-xl text-left font-bold flex-1">QBO Data Summary</h2>
+                        <input
+                            type="date"
+                            value={fromDate}
+                            onChange={(e) => setFromDate(e.target.value)}
+                            className="border p-2 rounded flex-1"
+                        />
+                        <input
+                            type="date"
+                            value={toDate}
+                            onChange={(e) => setToDate(e.target.value)}
+                            className="border p-2 rounded flex-1"
+                        />
+                    </div>
+
                     {!file.qbo?.isConnected ? (
                         <p className="text-red-500 italic">
                             Please connect QBO to sync data

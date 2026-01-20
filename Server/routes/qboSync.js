@@ -53,6 +53,9 @@ const fetchAndStoreQboQueryData = async ({
   table,
   responseKey,
   accessToken,
+  dateField,
+  fromDate,
+  toDate,
   onChunk,
   onProgress,   // 👈 NEW
 }) => {
@@ -61,11 +64,21 @@ const fetchAndStoreQboQueryData = async ({
   let total = 0;
 
   while (true) {
+
+    let whereClause = "";
+
+    if (dateField && fromDate && toDate) {
+      whereClause = `where ${dateField} >= '${fromDate}' and ${dateField} <= '${toDate}'`;
+    }
+
+
     const query = `
-      select * from ${table}
-      startposition ${startPosition}
-      maxresults ${maxResults}
-    `;
+  select * from ${table}
+  ${whereClause}
+  startposition ${startPosition}
+  maxresults ${maxResults}
+`;
+
 
     const response = await axios.get(
       `${baseUrl}/v3/company/${realmId}/query?minorversion=75`,
@@ -112,7 +125,7 @@ const fetchAndStoreQboQueryData = async ({
 /* SYNC QBO DATA USING REST API */
 router.post("/sync", authMiddleware, async (req, res) => {
   try {
-    const { fileId, modules } = req.body;
+    const { fileId, modules, fromDate, toDate } = req.body;
 
     console.log("\n📥 Sync Request:", { fileId, modules });
 
@@ -167,6 +180,9 @@ router.post("/sync", authMiddleware, async (req, res) => {
             table: config.table,
             responseKey: config.responseKey,
             accessToken,
+            dateField: config.dateField,
+            fromDate,
+            toDate,
             onChunk: async (chunk) => {
               const uniqueChunk = Object.values(
                 chunk.reduce((acc, item) => {

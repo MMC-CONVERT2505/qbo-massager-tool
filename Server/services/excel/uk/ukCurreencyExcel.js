@@ -2,12 +2,25 @@ const ExcelJS = require("exceljs");
 const QboRawData = require("../../../models/QboRawData");
 const flattenObject = require("../../../utils/flattenObject");
 
-module.exports = async function ukCurrencyExcel(fileId, res) {
+// module.exports = async function ukCurrencyExcel(fileId, res) {
+//   try {
+//     const records = await QboRawData.find({
+//       fileId,
+//       module: 'companycurrency',
+//     }).lean();
+
+module.exports = async function ukCurrencyExcel({
+  fileId,
+  res,
+}) {
   try {
-    const records = await QboRawData.find({
+    const filter = {
       fileId,
-      module: 'companycurrency',
-    }).lean();
+      module: "companycurrency",
+    };
+
+    const records = await QboRawData.find(filter).lean();
+
 
     if (!records.length) {
       return res.status(404).json({ message: "No UK company currency data found" });

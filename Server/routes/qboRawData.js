@@ -102,28 +102,74 @@ router.get("/summary/:realmId", authMiddleware, async (req, res) => {
 
 
 //Excel export route
-router.get("/export-excel/:fileId/:region/:moduleKey", authMiddleware, async (req, res) => {
-  const { fileId, region, moduleKey } = req.params;
-  try {
-    await excelResolver({ fileId, region, moduleKey, res });
-  } catch (err) {
-    console.error("EXCEL EXPORT ERROR:", err);
-    res.status(500).json({ message: "Excel export failed" });
+// router.get("/export-excel/:fileId/:region/:moduleKey", authMiddleware, async (req, res) => {
+//   const { fileId, region, moduleKey } = req.params;
+//   try {
+//     await excelResolver({ fileId, region, moduleKey, res });
+//   } catch (err) {
+//     console.error("EXCEL EXPORT ERROR:", err);
+//     res.status(500).json({ message: "Excel export failed" });
+//   }
+// }
+// );
+router.get(
+  "/export-excel/:fileId/:region/:moduleKey",
+  authMiddleware,
+  async (req, res) => {
+    const { fileId, region, moduleKey } = req.params;
+    const { fromDate, toDate } = req.query; // 👈 NEW
+
+    try {
+      await excelResolver({
+        fileId,
+        region,
+        moduleKey,
+        fromDate,
+        toDate,
+        userId: req.userId,
+        res,
+      });
+    } catch (err) {
+      console.error("EXCEL EXPORT ERROR:", err);
+      res.status(500).json({ message: "Excel export failed" });
+    }
   }
-}
 );
 
 
 //CSV export route
-router.get("/export-csv/:fileId/:region/:moduleKey", authMiddleware, async (req, res) => {
-  const { fileId, region, moduleKey } = req.params;
-  try {
-    await csvResolver({ fileId, region, moduleKey, res });
-  } catch (err) {
-    console.error("CSV EXPORT ERROR:", err);
-    res.status(500).json({ message: "CSV export failed" });
+// router.get("/export-csv/:fileId/:region/:moduleKey", authMiddleware, async (req, res) => {
+//   const { fileId, region, moduleKey } = req.params;
+//   try {
+//     await csvResolver({ fileId, region, moduleKey, res });
+//   } catch (err) {
+//     console.error("CSV EXPORT ERROR:", err);
+//     res.status(500).json({ message: "CSV export failed" });
+//   }
+// }
+// );
+router.get(
+  "/export-csv/:fileId/:region/:moduleKey",
+  authMiddleware,
+  async (req, res) => {
+    const { fileId, region, moduleKey } = req.params;
+    const { fromDate, toDate } = req.query; // 👈 NEW
+
+    try {
+      await csvResolver({
+        fileId,
+        region,
+        moduleKey,
+        fromDate,
+        toDate,
+        userId: req.userId,
+        res,
+      });
+    } catch (err) {
+      console.error("CSV EXPORT ERROR:", err);
+      res.status(500).json({ message: "CSV export failed" });
+    }
   }
-}
 );
 
 module.exports = router;

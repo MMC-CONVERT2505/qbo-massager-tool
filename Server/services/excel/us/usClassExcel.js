@@ -2,12 +2,18 @@ const ExcelJS = require("exceljs");
 const QboRawData = require("../../../models/QboRawData");
 const flattenObject = require("../../../utils/flattenObject");
 
-module.exports = async function usClassExcel(fileId, res) {
+module.exports = async function usClassExcel({
+  fileId,
+  res,
+}) {
   try {
-    const records = await QboRawData.find({
+    const filter = {
       fileId,
-      module: 'class',
-    }).lean();
+      module: "class",
+    };
+
+    const records = await QboRawData.find(filter).lean();
+
 
     if (!records.length) {
       return res.status(404).json({ message: "No US class data found" });
