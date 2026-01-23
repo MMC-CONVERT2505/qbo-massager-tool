@@ -53,10 +53,10 @@ module.exports = async function usInvoicesExcel({
 
     records.forEach(({ raw }) => {
       const invoiceCommon = {
-        invoiceId: raw.Id,
+        invoiceId: Number(raw.Id),
         docNumber: raw.DocNumber,
         txnDate: raw.TxnDate,
-        customerId: raw.CustomerRef?.value,
+        customerId: Number(raw.CustomerRef?.value),
         customerName: raw.CustomerRef?.name,
         currency: raw.CurrencyRef?.value,
         amount: raw.TotalAmt,
@@ -69,15 +69,15 @@ module.exports = async function usInvoicesExcel({
 
         sheet.addRow({
           ...invoiceCommon,
-          lineId: line.Id,
-          lineNum: line.LineNum,
+          lineId: Number(line.Id),
+          lineNum: Number(line.LineNum),
           description: line.Description,
-          itemId: line.SalesItemLineDetail?.ItemRef?.value,
+          itemId: Number(line.SalesItemLineDetail?.ItemRef?.value),
           itemName: line.SalesItemLineDetail?.ItemRef?.name,
           qty: line.SalesItemLineDetail?.Qty,
           unitPrice: line.SalesItemLineDetail?.UnitPrice,
           lineAmount: line.Amount,
-          taxCode: line.SalesItemLineDetail?.TaxCodeRef?.value,
+          taxCode: Number(line.SalesItemLineDetail?.TaxCodeRef?.value),
         });
       });
     });

@@ -93,7 +93,7 @@ export default function SummaryDashboard() {
         { key: "billpayment", label: "BillPayment" },
         // { key: "vendorcredit", label: "VendorCredit" },
         // { key: "creditmemo", label: "CreditMemo" },
-        // { key: "journalentry", label: "JournalEntry" },
+        { key: "journalentry", label: "JournalEntry" },
         // { key: "transfer", label: "Transfer" },
         // { key: "deposit", label: "Deposit" },
         // { key: "estimate", label: "Estimate" },

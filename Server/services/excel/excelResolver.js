@@ -46,7 +46,7 @@ const excelResolver = async ({
       item: ukItemsExcel,
       class: ukClassExcel,
       taxrate: ukTaxRatesExcel,
-      currency: ukCurreencyExcel,
+      companycurrency: ukCurreencyExcel,
       term: ukTermsExcel,
       invoice: ukInvoicesExcel,
       bill: ukBillsExcel,
@@ -62,7 +62,7 @@ const excelResolver = async ({
       item: usItemsExcel,
       class: usClassExcel,
       taxrate: usTaxRatesExcel,
-      currency: usCurrencyExcel,
+      companycurrency: usCurrencyExcel,
       term: usTermsExcel,
       invoice: usInvoicesExcel,
       bill: usBillsExcel,
@@ -70,6 +70,55 @@ const excelResolver = async ({
       billpayment: usBillPaymentsExcel,
       journalentry: usJournalEntryExcel,
     },
+
+    // SA: {
+    //   account: usAccountsExcel,
+    //   customer: usCustomersExcel,
+    //   vendor: usVendorsExcel,
+    //   item: usItemsExcel,
+    //   class: usClassExcel,
+    //   taxrate: usTaxRatesExcel,
+    //   currency: usCurrencyExcel,
+    //   term: usTermsExcel,
+    //   invoice: usInvoicesExcel,
+    //   bill: usBillsExcel,
+    //   payment: usPaymentsExcel,
+    //   billpayment: usBillPaymentsExcel,
+    //   journalentry: usJournalEntryExcel,
+    // },
+
+    // IR: {
+    //   account: usAccountsExcel,
+    //   customer: usCustomersExcel,
+    //   vendor: usVendorsExcel,
+    //   item: usItemsExcel,
+    //   class: usClassExcel,
+    //   taxrate: usTaxRatesExcel,
+    //   currency: usCurrencyExcel,
+    //   term: usTermsExcel,
+    //   invoice: usInvoicesExcel,
+    //   bill: usBillsExcel,
+    //   payment: usPaymentsExcel,
+    //   billpayment: usBillPaymentsExcel,
+    //   journalentry: usJournalEntryExcel,
+    // },
+
+    // OTHER: {
+    //   account: usAccountsExcel,
+    //   customer: usCustomersExcel,
+    //   vendor: usVendorsExcel,
+    //   item: usItemsExcel,
+    //   class: usClassExcel,
+    //   taxrate: usTaxRatesExcel,
+    //   currency: usCurrencyExcel,
+    //   term: usTermsExcel,
+    //   invoice: usInvoicesExcel,
+    //   bill: usBillsExcel,
+    //   payment: usPaymentsExcel,
+    //   billpayment: usBillPaymentsExcel,
+    //   journalentry: usJournalEntryExcel,
+    // },
+
   };
 
   const regionMap = excelMap[REGION];
@@ -84,8 +133,6 @@ const excelResolver = async ({
     });
   }
 
-  // 🚀 finally call correct function
-  // await excelFn(fileId, res);
   await excelFn({ fileId, fromDate, toDate, userId, res });
 };
 

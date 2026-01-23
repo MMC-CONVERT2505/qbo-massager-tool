@@ -4,7 +4,7 @@ const authMiddleware = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
-const ALLOWED_REGIONS = ["USA", "SA", "AUS", "UK", "IND"];
+const ALLOWED_REGIONS = ["USA", "SA", "AUS", "IR", "OTHER"];
 
 /* CREATE FILE */
 router.post("/", authMiddleware, async (req, res) => {

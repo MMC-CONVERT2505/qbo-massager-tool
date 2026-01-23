@@ -46,9 +46,9 @@ module.exports = async function usPaymentsExcel({
 
     records.forEach(({ raw }) => {
       const paymentCommon = {
-        invoiceId: raw.Id,
+        invoiceId: Number(raw.Id),
         txnDate: raw.TxnDate,
-        customerId: raw.CustomerRef?.value,
+        customerId: Number(raw.CustomerRef?.value),
         customerName: raw.CustomerRef?.name,
         currency: raw.CurrencyRef?.value,
         amount: raw.TotalAmt,
@@ -72,7 +72,7 @@ module.exports = async function usPaymentsExcel({
           sheet.addRow({
             ...paymentCommon,
             lineAmount: line.Amount,
-            txnId: txn.TxnId,
+            txnId: Number(txn.TxnId),
             txnType: txn.TxnType,
           });
         });

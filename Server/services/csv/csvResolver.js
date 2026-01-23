@@ -27,25 +27,74 @@ const csvResolver = async ({ fileId, region, moduleKey, res }) => {
       customer: ukCustomersCSV,
       vendor: ukVendorsCSV,
       item: ukItemsCSV,
-      class: ukClassCSV,      
+      class: ukClassCSV,
       taxrate: ukTaxRatesCSV,
       currency: ukCurrencyCSV,
       term: ukTermsCSV,
     },
-    
+
     USA: {
       account: usAccountsCSV,
       customer: usCustomersCSV,
       vendor: usVendorsCSV,
       item: usItemsCSV,
-      class: usClassCSV,      
+      class: usClassCSV,
       taxrate: usTaxRatesCSV,
       currency: usCurrencyCSV,
       term: usTermsCSV,
     },
+
+    SA: {
+      account: usAccountsExcel,
+      customer: usCustomersExcel,
+      vendor: usVendorsExcel,
+      item: usItemsExcel,
+      class: usClassExcel,
+      taxrate: usTaxRatesExcel,
+      currency: usCurrencyExcel,
+      term: usTermsExcel,
+      invoice: usInvoicesExcel,
+      bill: usBillsExcel,
+      payment: usPaymentsExcel,
+      billpayment: usBillPaymentsExcel,
+      journalentry: usJournalEntryExcel,
+    },
+
+    IR: {
+      account: usAccountsExcel,
+      customer: usCustomersExcel,
+      vendor: usVendorsExcel,
+      item: usItemsExcel,
+      class: usClassExcel,
+      taxrate: usTaxRatesExcel,
+      currency: usCurrencyExcel,
+      term: usTermsExcel,
+      invoice: usInvoicesExcel,
+      bill: usBillsExcel,
+      payment: usPaymentsExcel,
+      billpayment: usBillPaymentsExcel,
+      journalentry: usJournalEntryExcel,
+    },
+
+    OTHER: {
+      account: usAccountsExcel,
+      customer: usCustomersExcel,
+      vendor: usVendorsExcel,
+      item: usItemsExcel,
+      class: usClassExcel,
+      taxrate: usTaxRatesExcel,
+      currency: usCurrencyExcel,
+      term: usTermsExcel,
+      invoice: usInvoicesExcel,
+      bill: usBillsExcel,
+      payment: usPaymentsExcel,
+      billpayment: usBillPaymentsExcel,
+      journalentry: usJournalEntryExcel,
+    },
+
   };
 
-  const regionMap = excelMap[REGION];  
+  const regionMap = excelMap[REGION];
   if (!regionMap) {
     return res.status(400).json({ message: `Region not supported: ${REGION}` });
   }

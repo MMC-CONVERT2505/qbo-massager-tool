@@ -2,13 +2,6 @@ const ExcelJS = require("exceljs");
 const QboRawData = require("../../../models/QboRawData");
 const flattenObject = require("../../../utils/flattenObject");
 
-// module.exports = async function ukCurrencyExcel(fileId, res) {
-//   try {
-//     const records = await QboRawData.find({
-//       fileId,
-//       module: 'companycurrency',
-//     }).lean();
-
 module.exports = async function ukCurrencyExcel({
   fileId,
   res,

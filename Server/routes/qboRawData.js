@@ -100,18 +100,7 @@ router.get("/summary/:realmId", authMiddleware, async (req, res) => {
   }
 });
 
-
-//Excel export route
-// router.get("/export-excel/:fileId/:region/:moduleKey", authMiddleware, async (req, res) => {
-//   const { fileId, region, moduleKey } = req.params;
-//   try {
-//     await excelResolver({ fileId, region, moduleKey, res });
-//   } catch (err) {
-//     console.error("EXCEL EXPORT ERROR:", err);
-//     res.status(500).json({ message: "Excel export failed" });
-//   }
-// }
-// );
+// Excel export route
 router.get(
   "/export-excel/:fileId/:region/:moduleKey",
   authMiddleware,
@@ -138,16 +127,6 @@ router.get(
 
 
 //CSV export route
-// router.get("/export-csv/:fileId/:region/:moduleKey", authMiddleware, async (req, res) => {
-//   const { fileId, region, moduleKey } = req.params;
-//   try {
-//     await csvResolver({ fileId, region, moduleKey, res });
-//   } catch (err) {
-//     console.error("CSV EXPORT ERROR:", err);
-//     res.status(500).json({ message: "CSV export failed" });
-//   }
-// }
-// );
 router.get(
   "/export-csv/:fileId/:region/:moduleKey",
   authMiddleware,

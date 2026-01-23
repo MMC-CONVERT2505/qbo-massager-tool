@@ -6,9 +6,9 @@ export default function AddFileModal({ onClose, onSave }) {
 
   const regions = [
     { value: "USA", label: "USA" },
-    { value: "SA", label: "South Africa" },
+    { value: "IR", label: "Ireland" },
     { value: "AUS", label: "Australia" },
-    { value: "UK", label: "United Kingdom" },
+    { value: "SA", label: "South Africa" },
     { value: "OTHER", label: "Other" },
   ];
 

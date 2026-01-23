@@ -9,7 +9,7 @@ module.exports = async function usCurrencyExcel({
   try {
     const filter = {
       fileId,
-      module: "currency",
+      module: "companycurrency",
     };
 
     const records = await QboRawData.find(filter).lean();

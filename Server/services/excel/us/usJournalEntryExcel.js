@@ -47,8 +47,8 @@ module.exports = async function usJournalEntryExcel({
 
     records.forEach(({ raw }) => {
       const journalCommon = {
-        journalId: raw.Id,
-        docNumber: raw.DocNumber,
+        journalId: Number(raw.Id),
+        docNumber: Number(raw.DocNumber),
         txnDate: raw.TxnDate,
         currency: raw.CurrencyRef?.value,
         taxamount: raw.TxnTaxDetail?.TotalTax,
@@ -60,8 +60,8 @@ module.exports = async function usJournalEntryExcel({
 
         sheet.addRow({
           ...journalCommon,
-          lineId: line.Id,
-          accountId: line.JournalEntryLineDetail?.AccountRef?.value,
+          lineId: Number(line.Id),
+          accountId: Number(line.JournalEntryLineDetail?.AccountRef?.value),
           accountName: line.JournalEntryLineDetail?.AccountRef?.name,
           unitPrice: line.JournalEntryLineDetail?.PostingType,
           lineAmount: line.Amount,

@@ -50,10 +50,10 @@ module.exports = async function usBillsExcel({
 
     records.forEach(({ raw }) => {
       const billCommon = {
-        billId: raw.Id,
+        billId: Number(raw.Id),
         docNumber: raw.DocNumber,
         txnDate: raw.TxnDate,
-        customerId: raw.VendorRef?.value,
+        customerId: Number(raw.VendorRef?.value),
         customerName: raw.VendorRef?.name,
         currency: raw.CurrencyRef?.value,
         amount: raw.TotalAmt,
@@ -66,7 +66,7 @@ module.exports = async function usBillsExcel({
 
         sheet.addRow({
           ...billCommon,
-          lineId: line.Id,
+          lineId: Number(line.Id),
           lineNum: line.LineNum,
           accountId: line.AccountBasedExpenseLineDetail?.AccountRef?.value,
           accountName: line.AccountBasedExpenseLineDetail?.AccountRef?.name,
