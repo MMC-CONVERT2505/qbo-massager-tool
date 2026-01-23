@@ -1,7 +1,7 @@
 const ExcelJS = require("exceljs");
 const QboRawData = require("../../../models/QboRawData");
 
-module.exports = async function usInvoicesExcel({
+module.exports = async function ukVendorCreditExcel({
   fileId,
   fromDate,
   toDate,
@@ -32,8 +32,8 @@ module.exports = async function usInvoicesExcel({
       { header: "Id", key: "invoiceId", width: 15 },
       { header: "DocNumber", key: "docNumber", width: 15 },
       { header: "TxnDate", key: "txnDate", width: 15 },
-      { header: "CustomerId", key: "customerId", width: 15 },
-      { header: "CustomerName", key: "customerName", width: 25 },
+      { header: "VendorId", key: "customerId", width: 15 },
+      { header: "VendorName", key: "customerName", width: 25 },
       { header: "Currency", key: "currency", width: 10 },
       { header: "Amount", key: "amount", width: 10 },
       { header: "TaxAmount", key: "taxamount", width: 10 },
@@ -42,12 +42,12 @@ module.exports = async function usInvoicesExcel({
       { header: "LineId", key: "lineId", width: 10 },
       { header: "LineNum", key: "lineNum", width: 10 },
       { header: "Description", key: "description", width: 40 },
-      { header: "ItemId", key: "itemId", width: 15 },
-      { header: "ItemName", key: "itemName", width: 25 },
-      { header: "Qty", key: "qty", width: 10 },
-      { header: "UnitPrice", key: "unitPrice", width: 15 },
+      // { header: "ItemId", key: "itemId", width: 15 },
+      // { header: "ItemName", key: "itemName", width: 25 },
+      // { header: "Qty", key: "qty", width: 10 },
+      // { header: "UnitPrice", key: "unitPrice", width: 15 },
       { header: "LineAmount", key: "lineAmount", width: 15 },
-      { header: "TaxCode", key: "taxCode", width: 15 },
+      // { header: "TaxCode", key: "taxCode", width: 15 },
     ];
 
     records.forEach(({ raw }) => {

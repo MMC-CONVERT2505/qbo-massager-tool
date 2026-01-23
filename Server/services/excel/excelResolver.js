@@ -29,6 +29,10 @@ const usVendorCreditExcel = require("./us/usVendorCreditExcel");
 const usCreditMemoExcel = require("./us/usCreditMemoExcel");
 const ukVendorCreditExcel = require("./uk/ukVendorCreditExcel");
 const ukCreditMemoExcel = require("./uk/ukCreditMemoExcel");
+const usTransferExcel = require("./us/usTransferExcel");
+const ukTransferExcel = require("./uk/ukTransferExcel");
+const usDepositsExcel = require("./us/usDepositsExcel");
+const ukDepositsExcel = require("./uk/ukDepositsExcel");
 
 const excelResolver = async ({
   fileId,
@@ -59,6 +63,8 @@ const excelResolver = async ({
       creditmemo: ukCreditMemoExcel,
       vendorcredit: ukVendorCreditExcel,
       journalentry: ukJournalEntryExcel,
+      transfer: ukTransferExcel,
+      deposit: ukDepositsExcel,
     },
 
     USA: {
@@ -77,6 +83,8 @@ const excelResolver = async ({
       creditmemo: usCreditMemoExcel,
       vendorcredit: usVendorCreditExcel,
       journalentry: usJournalEntryExcel,
+      transfer: usTransferExcel,
+      deposit: usDepositsExcel,
     },
 
     // SA: {

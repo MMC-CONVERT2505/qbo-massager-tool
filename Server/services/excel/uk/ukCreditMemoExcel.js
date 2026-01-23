@@ -1,7 +1,7 @@
 const ExcelJS = require("exceljs");
 const QboRawData = require("../../../models/QboRawData");
 
-module.exports = async function usInvoicesExcel({
+module.exports = async function ukCreditMemoExcel({
   fileId,
   fromDate,
   toDate,

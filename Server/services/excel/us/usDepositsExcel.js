@@ -1,7 +1,7 @@
 const ExcelJS = require("exceljs");
 const QboRawData = require("../../../models/QboRawData");
 
-module.exports = async function usVendorCreditExcel({
+module.exports = async function usDepositsExcel({
   fileId,
   fromDate,
   toDate,
@@ -10,7 +10,7 @@ module.exports = async function usVendorCreditExcel({
   try {
     const filter = {
       fileId,
-      module: "vendorcredit",
+      module: "deposit",
     };
 
     if (fromDate && toDate) {
@@ -23,43 +23,50 @@ module.exports = async function usVendorCreditExcel({
     const records = await QboRawData.find(filter).lean();
 
     if (!records.length) {
-      return res.status(404).json({ message: "No Vendor Credit data found" });
+      return res.status(404).json({ message: "No Deposit data found" });
     }
 
     const workbook = new ExcelJS.Workbook();
-    const sheet = workbook.addWorksheet("Vendor Credit");
+    const sheet = workbook.addWorksheet("Deposits");
     sheet.columns = [
       { header: "Id", key: "invoiceId", width: 15 },
-      { header: "DocNumber", key: "docNumber", width: 15 },
+      // { header: "DocNumber", key: "docNumber", width: 15 },
       { header: "TxnDate", key: "txnDate", width: 15 },
-      { header: "VendorId", key: "customerId", width: 15 },
-      { header: "VendorName", key: "customerName", width: 25 },
+      // { header: "CustomerId", key: "customerId", width: 15 },
+      // { header: "CustomerName", key: "customerName", width: 25 },
       { header: "Currency", key: "currency", width: 10 },
       { header: "Amount", key: "amount", width: 10 },
-      { header: "TaxAmount", key: "taxamount", width: 10 },
+      // { header: "TaxAmount", key: "taxamount", width: 10 },
 
 
       { header: "LineId", key: "lineId", width: 10 },
       { header: "LineNum", key: "lineNum", width: 10 },
       { header: "Description", key: "description", width: 40 },
+      { header: "LineAmount", key: "lineAmount", width: 15 },
+      { header: "LineDetailType", key: "lineDetailType", width: 20 },
+      { header: "LineAccountId", key: "lineAccountId", width: 15 },
+      { header: "LineAccountName", key: "lineAccountName", width: 25 },
+
+
+
+      
       // { header: "ItemId", key: "itemId", width: 15 },
       // { header: "ItemName", key: "itemName", width: 25 },
       // { header: "Qty", key: "qty", width: 10 },
       // { header: "UnitPrice", key: "unitPrice", width: 15 },
-      { header: "LineAmount", key: "lineAmount", width: 15 },
       // { header: "TaxCode", key: "taxCode", width: 15 },
     ];
 
     records.forEach(({ raw }) => {
       const invoiceCommon = {
         invoiceId: Number(raw.Id),
-        docNumber: raw.DocNumber,
+        // docNumber: raw.DocNumber,
         txnDate: raw.TxnDate,
-        customerId: Number(raw.VendorRef?.value),
-        customerName: raw.VendorRef?.name,
+        // customerId: Number(raw.CustomerRef?.value),
+        // customerName: raw.CustomerRef?.name,
         currency: raw.CurrencyRef?.value,
         amount: raw.TotalAmt,
-        taxamount: raw.TxnTaxDetail?.TotalTax,
+        // taxamount: raw.TxnTaxDetail?.TotalTax,
       };
 
       raw.Line?.forEach((line) => {
@@ -71,12 +78,10 @@ module.exports = async function usVendorCreditExcel({
           lineId: Number(line.Id),
           lineNum: Number(line.LineNum),
           description: line.Description,
-          itemId: Number(line.SalesItemLineDetail?.ItemRef?.value),
-          itemName: line.SalesItemLineDetail?.ItemRef?.name,
-          qty: line.SalesItemLineDetail?.Qty,
-          unitPrice: line.SalesItemLineDetail?.UnitPrice,
           lineAmount: line.Amount,
-          taxCode: Number(line.SalesItemLineDetail?.TaxCodeRef?.value),
+          lineDetailType: line.DetailType,
+          lineAccountId: Number(line.DepositLineDetail?.AccountRef?.value),
+          lineAccountName: line.DepositLineDetail?.AccountRef?.name,
         });
       });
     });
@@ -95,7 +100,7 @@ module.exports = async function usVendorCreditExcel({
     await workbook.xlsx.write(res);
     res.end();
   } catch (err) {
-    console.error("VENDOR CREDIT EXCEL ERROR:", err);
-    res.status(500).json({ message: "Vendor Credit Excel export failed" });
+    console.error("DEPOSIT EXCEL ERROR:", err);
+    res.status(500).json({ message: "Deposit Excel export failed" });
   }
 };
